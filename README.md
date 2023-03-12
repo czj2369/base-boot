@@ -47,15 +47,14 @@ sh service-normal.sh start 项目名-版本号
 
 ### 6.jenkins部署项目
 
-1.正常部署
-
 如果进行了第五步的，请还原
+
+1.正常部署
 
 在jenkins项目配置的Post Steps的选择Send files or execute commands over SSH ，且在Exec command输入以下指令
 
 ```shell
 #!/usr/bin/env bash
-# 配置jdk路径
 cd /home/docker/jenkins/workspace/base-boot/target/classes/shell
 sh jenkins-deploy-docker.sh 
 ```
@@ -66,8 +65,8 @@ Exec command的指令为
 
 ```shell
 #!/usr/bin/env bash
-# 配置jdk路径
 cd /home/docker/jenkins/workspace/base-boot/target/classes/shell
 sh jenkins-deploy-docker.sh
 ```
 
+注：请将路径中base-boot缓存maven打包之后的项目名

@@ -26,7 +26,7 @@ done <<< "$(cat ../release-note)"
 export JAVA_HOME=/home/dev/jdk-11.0.17
 # 配置jenkins映射本地workspace路径，最终路径为项目bin的启动脚本位置
 cd /home/docker/jenkins/workspace/$API_NAME/target/classes/shell
-cp ../../$API_NAME-$API_VERSION.jar $API_NAME-$API_VERSION.jar
+cp ../../$API_NAME-$API_VERSION.jar $API_NAME.jar
 # -t 表示指定镜像仓库名称/镜像名称:镜像标签 .表示使用当前目录下的Dockerfile
 docker build -t $API_NAME/$API_NAME:$API_VERSION .
 docker stop $API_NAME
