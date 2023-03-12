@@ -32,4 +32,6 @@ cd /home/docker/jenkins/workspace/$API_NAME/target/classes/shell
 cp ../../$API_NAME-$API_VERSION.jar $API_NAME-$API_VERSION.jar
 # -t 表示指定镜像仓库名称/镜像名称:镜像标签 .表示使用当前目录下的Dockerfile
 docker build -t $API_NAME/$API_NAME:$API_VERSION .
-docker stop $API_NAME && docker rm $API_NAME && docker run -p $API_PORT:$API_PORT --name $API_NAME -v /home/logs/$API_NAME:/home/logs -d $API_NAME/$API_NAME:$API_VERSION
+docker stop $API_NAME
+docker rm $API_NAME
+docker run -p $API_PORT:$API_PORT --name $API_NAME -v /home/logs/$API_NAME:/home/logs -d $API_NAME/$API_NAME:$API_VERSION
