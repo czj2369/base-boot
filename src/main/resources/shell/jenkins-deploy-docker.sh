@@ -8,14 +8,11 @@ do
   config=(${line//=/ })
   if [[ ${config[0]} == "name" ]]
   then
-          echo ${config[1]}
     API_NAME=${config[1]}
   elif [[ ${config[0]} == "version" ]]
   then
-          echo ${config[1]}
     API_VERSION=${config[1]}
   else
-    echo ${config[1]}
     API_PORT=${config[1]}
   fi
 

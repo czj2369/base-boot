@@ -6,7 +6,7 @@ export JRE_HOME=$JAVA_HOME
 # 变量赋值，反斜杠为转义
 # API_NAME+JAR_NAME 包名 第二个参数传jar名称
 API_NAME=$2
-JAR_NAME=../../$API_NAME\.jar
+JAR_NAME=../lib/$API_NAME\.jar
 # 启动日志名
 LOG_NAME=../../$API_NAME\.log
 #PID  代表是PID文件
@@ -62,7 +62,7 @@ startService(){
 		# 2>&1 是将标准错误信息转变成标准输出，这样就可以将错误信息输出到out.log 日志里面来
 		# -noverify：关闭字节码验证
 		# java -jar XXX.jar ：执行jar
-		nohup $JRE_HOME/bin/java -noverify -Xms128m -Xmx526m -jar $JAR_NAME >$LOG_NAME 2>&1 &
+		nohup $JRE_HOME/bin/java -server -Xms68m -Xmx68m -Xmn48m -Xss256K -Dspring.config.location=../config/application.yml -Dloader.path=../lib,resources,lib -jar $JAR_NAME >$LOG_NAME 2>&1 &
 		# $! Shell最后运行的后台Process的PID
 		# '>'  为创建： echo “hello shell”  > out.txt
 		# '>>' 为追加：echo “hello shell”  >> out.txt
@@ -78,7 +78,7 @@ debugService(){
   if [ $? -eq "0" ]; then
     echo ">>> ${JAR_NAME} is already running, PID=${pid} <<<"
   else
-    nohup $JRE_HOME/bin/java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xms128m -Xmx256m -jar $JAR_NAME >$LOG_NAME 2>&1 &
+    nohup $JRE_HOME/bin/java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xms128m -Xmx256m -Dspring.config.location=../config/application.yml -Dloader.path=../lib,resources,lib -jar $JAR_NAME >$LOG_NAME 2>&1 &
     echo $! > $PID
     echo ">>>  ${JAR_NAME} start in debug mode successfully, PID=$! <<<"
    fi
