@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--
+节点Configuration两个属性status 和 monitorinterval
+    有两个子节点：Appenders 和 Loggers(表明可以定义多个 Appender 和Logger)。
+    status 用来指定 log4j 本身的打印日志的级别。默认是OFF
+    monitorinterval 用于指定 log4j 自动重新配置的监测间隔时间，单位是 s，最小是 5s。
+-->
+<configuration status="WARN" monitorInterval="30">
+
+    <properties>
+        <!--自定义一些常量，之后使用${变量名}引用-->
+        <property name="prjname">base-boot</property>
+        <!-- 指定文件输出路径 -->
+        <property name="logdir">/home/logs/${prjname}</property>
+        <!--
+            %d{HH:mm:ss.SSS} 表示输出到毫秒的时间
+            %t 输出当前线程名称
+            %-5level 输出日志级别，-5表示左对齐并且固定输出5个字符，如果不足在右边补0
+            %logger 输出logger名称，因为Root Logger没有名称，所以没有输出
+            %msg 日志文本
+            %n 换行
+          其他常用的占位符有：
+            %F 输出所在的类文件名，如Log4j2Test.java
+            %L 输出行号
+            %M 输出所在方法名
+            %l 输出语句所在的行数, 包括类名、方法名、文件名、行数
+        -->
+        <property name="PATTERN">%date{YYYY-MM-dd HH:mm:ss,SSS} [%t] %-5level [%L] - %msg%n</property>
+    </properties>
+
+    <!--appenders:定义输出内容,输出格式,输出方式,日志保存策略等,常用其下三种标签[console,File,RollingFile]-->
+    <appenders>
+        <!-- 控制台输出 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!-- 输出格式，不设置默认为:%m%n. -->
+            <PatternLayout pattern="${PATTERN}"/>
+        </Console>
+
+        <!--
+            name:指定Appender的名字。
+            fileName:指定输出日志的目的文件带全路径的文件名。
+            filePattern:指定新建日志文件的名称格式。
+        -->
+        <RollingFile name="ErrorAppender" fileName="${logdir}/${prjname}_error.log"
+                     filePattern="${logdir}/$${date:yyyy-MM-dd}/${prjname}_error.%d{yyyy-MM-dd-HH}.log" append="true">
+            <!-- PatternLayout : 输出格式，不设置默认为:%m%n -->
+            <PatternLayout pattern="${PATTERN}"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!-- Policies : 指定滚动日志的策略，就是什么时候进行新建日志文件输出日志 -->
+            <Policies>
+                <!-- TimeBasedTriggeringPolicy:Policies子节点，基于时间的滚动策略，interval属性用来指定多久滚动一次，默认是1 hour。modulate=true用来调整时间 -->
+                <TimeBasedTriggeringPolicy/>
+                <!-- SizeBasedTriggeringPolicy:Policies子节点，基于指定文件大小的滚动策略，size属性用来定义每个日志文件的大小。-->
+                <SizeBasedTriggeringPolicy size="100 MB"/><!-- 表示当文件为100mb时 新创建一个日志文件 -->
+                                <!-- DefaultRolloverStrategy:用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的(通过max属性)。 -->
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="DebugAppender" fileName="${logdir}/${prjname}_info.log"
+                     filePattern="${logdir}/$${date:yyyy-MM-dd}/${prjname}_info.%d{yyyy-MM-dd-HH}.log" append="true">
+            <PatternLayout pattern="${PATTERN}"/>
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </RollingFile>
+
+        <!--异步appender-->
+        <Async name="AsyncAppender" includeLocation="true">
+            <AppenderRef ref="ErrorAppender"/>
+            <AppenderRef ref="DebugAppender"/>
+        </Async>
+
+    </appenders>
+
+    <Loggers>
+        <!--过滤掉spring和mybatis的一些无用的debug信息-->
+        <logger name="org.springframework" level="INFO">
+        </logger>
+        <logger name="org.mybatis" level="INFO">
+        </logger>
+        <logger name="springfox" level="INFO">
+        </logger>
+        <logger name="org.apache.http" level="INFO">
+        </logger>
+        <logger name="com.alibaba.nacos" level="WARN">
+        </logger>
+
+        <!--OFF   0-->
+        <!--FATAL   100-->
+        <!--ERROR   200-->
+        <!--WARN   300-->
+        <!--INFO   400-->
+        <!--DEBUG   500-->
+        <!--TRACE   600-->
+        <!--ALL   Integer.MAX_VALUE-->
+        <Root level="INFO" includeLocation="true">
+            <AppenderRef ref="AsyncAppender"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</configuration>
