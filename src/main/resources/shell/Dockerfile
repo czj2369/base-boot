@@ -11,4 +11,4 @@ RUN bash -c 'touch /home/base-boot.jar'
 # 声明服务运行在xx端口
 EXPOSE 10004
 # 指定docker容器启动时运行jar包
-ENTRYPOINT ["java", "-jar","/home/base-boot.jar"]
+ENTRYPOINT ["java", "-server","-Xms68m","-Xmx68m","-Xmn48m","-Xss256K","-jar","/home/base-boot.jar"]
