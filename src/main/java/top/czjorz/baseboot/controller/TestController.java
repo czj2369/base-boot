@@ -1,5 +1,6 @@
 package top.czjorz.baseboot.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,9 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @describe testController
  */
 @RestController
+@CrossOrigin
 public class TestController {
     @RequestMapping("/hello")
     public String helloWorld(){
-        return "Hello, World2!";
+        return "Hello, World!";
     }
 }
