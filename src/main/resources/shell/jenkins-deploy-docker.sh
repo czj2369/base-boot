@@ -31,4 +31,4 @@ cp ../../$API_NAME-$API_VERSION.jar $API_NAME.jar
 docker build -t $API_NAME/$API_NAME:$API_VERSION .
 docker stop $API_NAME
 docker rm $API_NAME
-docker run -p $API_PORT:$API_PORT --name $API_NAME -v /home/logs/$API_NAME:/home/logs -d $API_NAME/$API_NAME:$API_VERSION
+docker run -p $API_PORT:$API_PORT --restart=always --name $API_NAME -v /home/logs/$API_NAME:/home/logs -d $API_NAME/$API_NAME:$API_VERSION
