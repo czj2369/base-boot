@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  base-boot:
+    container_name: base-boot
+    image: ${API_NAME}/${API_NAME}:${API_VERSION}
+    restart: unless-stopped
+    ports:
+      - ${API_PORT}:${MAPPING_PORT}
+    volumes:
+      - "${LOG_PATH}logs:/logs"
+      - "${CONFIG_PATH}:/config"
+    environment:
+      TZ: Asia/Shanghai

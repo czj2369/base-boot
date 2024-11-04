@@ -4,11 +4,14 @@ FROM openjdk:11-jdk
 MAINTAINER czj
 # 将当前目录下的jar包复制到docker容器的/目录下
 ADD base-boot.jar /home/base-boot.jar
+# 将lib目录复制到容器里面
+RUN mkdir -p /lib
+COPY lib /lib
 # 设置日志路径
-VOLUME /home/logs
-# 运行过程中创建一个mall-tiny-docker-file.jar文件
+VOLUME /logs
+# 运行过程中创建一个.jar文件
 RUN bash -c 'touch /home/base-boot.jar'
 # 声明服务运行在xx端口
 EXPOSE 10004
 # 指定docker容器启动时运行jar包
-ENTRYPOINT ["java", "-server","-Xms68m","-Xmx68m","-Xmn48m","-Xss256K","-jar","/home/base-boot.jar"]
+ENTRYPOINT ["java", "-server","-Xms68m","-Xmx68m","-Xmn48m","-Xss256K","-Dspring.config.location=/config/application.yml","-Dfile.encoding=UTF-8","-Dloader.path=/lib,resources,lib", "-jar","/home/base-boot.jar"]

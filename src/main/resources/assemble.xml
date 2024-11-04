@@ -18,6 +18,26 @@
             <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
+            <!--自定义的启动项目的脚本文件-->
+            <directory>src/main/resources/shell</directory>
+            <outputDirectory>bin</outputDirectory>
+            <lineEnding>unix</lineEnding>
+            <includes>
+                <!--指定要包含的文件名称-->
+                <include>*</include>
+            </includes>
+            <fileMode>0755</fileMode>
+        </fileSet>
+        <!--指定外部依赖-->
+        <fileSet>
+            <!--指定jar包和输出位置-->
+            <directory>target/lib</directory>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <!--指定配置文件的位置、要包含的配置文件和配置文件输出目录-->
             <directory>src/main/resources</directory>
             <outputDirectory>config</outputDirectory>
@@ -42,7 +62,7 @@
         <fileSet>
             <!--指定jar包和输出位置-->
             <directory>target</directory>
-            <outputDirectory>lib</outputDirectory>
+            <outputDirectory>./</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>

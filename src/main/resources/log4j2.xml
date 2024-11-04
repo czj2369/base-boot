@@ -12,7 +12,7 @@
         <!--自定义一些常量，之后使用${变量名}引用-->
         <property name="prjname">base-boot</property>
         <!-- 指定文件输出路径 -->
-        <property name="logdir">/home/logs/${prjname}</property>
+        <property name="logdir">/logs/${prjname}</property>
         <!--
             %d{HH:mm:ss.SSS} 表示输出到毫秒的时间
             %t 输出当前线程名称
