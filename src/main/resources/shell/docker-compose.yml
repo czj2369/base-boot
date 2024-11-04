@@ -6,7 +6,7 @@ services:
     image: ${API_NAME}/${API_NAME}:${API_VERSION}
     restart: unless-stopped
     ports:
-      - ${API_PORT}:${MAPPING_PORT}
+      - ${MAPPING_PORT}:${API_PORT}
     volumes:
       - "${LOG_PATH}logs:/logs"
       - "${CONFIG_PATH}:/config"
