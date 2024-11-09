@@ -1,12 +1,12 @@
-version: "3.8"
+version: "3"
 
 services:
-  base-boot:
-    container_name: base-boot
-    image: ${API_NAME}/${API_NAME}:${API_VERSION}
+  app:
+    container_name: ${APP_NAME}
+    image: ${APP_NAME}/${APP_NAME}:${APP_VERSION}
     restart: unless-stopped
     ports:
-      - ${MAPPING_PORT}:${API_PORT}
+      - ${MAPPING_PORT}:${APP_PORT}
     volumes:
       - "${LOG_PATH}logs:/logs"
       - "${CONFIG_PATH}:/config"

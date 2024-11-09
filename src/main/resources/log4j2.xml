@@ -39,7 +39,7 @@
 
         <!--
             name:指定Appender的名字。
-            fileName:指定输出日志的目的文件带全路径的文件名。
+          fileName:指定输出日志的目的文件带全路径的文件名。
             filePattern:指定新建日志文件的名称格式。
         -->
         <RollingFile name="ErrorAppender" fileName="${logdir}/${prjname}_error.log"
@@ -53,7 +53,7 @@
                 <TimeBasedTriggeringPolicy/>
                 <!-- SizeBasedTriggeringPolicy:Policies子节点，基于指定文件大小的滚动策略，size属性用来定义每个日志文件的大小。-->
                 <SizeBasedTriggeringPolicy size="100 MB"/><!-- 表示当文件为100mb时 新创建一个日志文件 -->
-                                <!-- DefaultRolloverStrategy:用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的(通过max属性)。 -->
+                              <!-- DefaultRolloverStrategy:用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的(通过max属性)。 -->
             </Policies>
         </RollingFile>
 
