@@ -26,7 +26,7 @@
             %M 输出所在方法名
             %l 输出语句所在的行数, 包括类名、方法名、文件名、行数
         -->
-        <property name="PATTERN">%date{YYYY-MM-dd HH:mm:ss,SSS} [%t] %-5level [%L] - %msg%n</property>
+        <property name="PATTERN">%date{YYYY-MM-dd HH:mm:ss,SSS} [%X{RequestId}] [%t] %-5level [%L] - %msg%n</property>
     </properties>
 
     <!--appenders:定义输出内容,输出格式,输出方式,日志保存策略等,常用其下三种标签[console,File,RollingFile]-->
@@ -53,7 +53,7 @@
                 <TimeBasedTriggeringPolicy/>
                 <!-- SizeBasedTriggeringPolicy:Policies子节点，基于指定文件大小的滚动策略，size属性用来定义每个日志文件的大小。-->
                 <SizeBasedTriggeringPolicy size="100 MB"/><!-- 表示当文件为100mb时 新创建一个日志文件 -->
-                              <!-- DefaultRolloverStrategy:用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的(通过max属性)。 -->
+                <!-- DefaultRolloverStrategy:用来指定同一个文件夹下最多有几个日志文件时开始删除最旧的，创建新的(通过max属性)。 -->
             </Policies>
         </RollingFile>
 
